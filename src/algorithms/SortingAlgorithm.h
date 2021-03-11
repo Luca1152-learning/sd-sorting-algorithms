@@ -7,7 +7,7 @@ using namespace std;
 
 class SortingAlgorithm {
 public:
-    virtual void sort(vector<int> &v) const = 0;
+    virtual void sort(vector<int> &values) const = 0;
 
 };
 

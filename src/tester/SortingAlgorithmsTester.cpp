@@ -7,6 +7,7 @@
 #include "../algorithms/CountingSort.h"
 #include "../algorithms/MergeSort.h"
 #include "../algorithms/QuickSort.h"
+#include "../algorithms/RadixSort.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -28,6 +29,11 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
             {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
     testAlgorithmOnRandomValues(
             QuickSort(),
+            {1000, 1000000, 1000000000},
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+    testAlgorithmOnRandomValues(
+            RadixSort(),
             {1000, 1000000, 1000000000},
             {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
     );
