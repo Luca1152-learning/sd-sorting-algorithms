@@ -2,6 +2,30 @@
 #include <iostream>
 #include "TestsGenerator.h"
 
+
+string TestsGenerator::enumToString(TestType testType) {
+    return m_enumToString[testType];
+}
+
+
+vector<int> TestsGenerator::generateTest(TestType testType, int size, int maxValue) {
+    switch (testType) {
+        case TestType::RANDOM_VALUES:
+            return generateRandomValues(size, maxValue);
+        case TestType::ASCENDING_VALUES:
+            return generateAscendingValues(size);
+        case TestType::DESCENDING_VALUES:
+            return generateDescendingValues(size);
+        case TestType::IDENTICAL_VALUES:
+            return generateIdenticalValues(size, maxValue);
+        case TestType::ASCENDING_SAW_VALUES:
+            return generateAscendingSawValues(size, maxValue);
+        case TestType::DESCENDING_SAW_VALUES:
+            return generateDescendingSawValues(size, maxValue);
+    }
+}
+
+
 vector<int> TestsGenerator::generateRandomValues(int size, int maxValue) {
     // Prerequisites
     random_device randomDevice;

@@ -9,6 +9,7 @@ class SortingAlgorithm {
 public:
     virtual void sort(vector<int> &values) const = 0;
 
+    virtual ~SortingAlgorithm() = default;
 };
 
 

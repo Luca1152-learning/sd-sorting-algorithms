@@ -14,219 +14,36 @@ using namespace std::chrono;
 using namespace std::string_literals;
 
 void SortingAlgorithmsTester::testSortingAlgorithms() {
-    testAlgorithmsOnRandomValues();
-    testAlgorithmsOnAscendingValues();
-    testAlgorithmsOnDescendingValues();
-    testAlgorithmsOnIdenticalValues();
-    testAlgorithmsOnAscendingSawValues();
-    testAlgorithmsOnDescendingSawValues();
-}
+    vector<SortingAlgorithm *> algorithmsToTest = {
+            new CountingSort(), new MergeSort(), new QuickSort(), new RadixSort(), new BubbleSort()
+    };
+    vector<TestsGenerator::TestType> testTypes = {
+            TestsGenerator::TestType::RANDOM_VALUES
+    };
+    vector<int> sizesToTest = {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000};
 
-void SortingAlgorithmsTester::testAlgorithmsOnRandomValues() {
-    testAlgorithmOnRandomValues(
-            BubbleSort(),
-            {1000, 1000000, 1000000000}, {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnRandomValues(
-            CountingSort(),
-            {1000, 1000000, 1000000000},
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnRandomValues(
-            MergeSort(),
-            {1000, 1000000, 1000000000},
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnRandomValues(
-            QuickSort(),
-            {1000, 1000000, 1000000000},
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnRandomValues(
-            RadixSort(),
-            {1000, 1000000, 1000000000},
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
-        const SortingAlgorithm &algorithm,
-        const vector<int> &maxValues, const vector<int> &sizes
-) {
-    for (auto maxValue : maxValues) {
-        for (auto size : sizes) {
-            vector<int> values = TestsGenerator::generateRandomValues(size, maxValue);
-            double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-            cout << "Random values - " << fixed << setprecision(3) << typeid(algorithm).name()
-                 << " algorithm (maxValue=" << maxValue << ", size=" << size << ") - " << time << "s\n";
-            cout.flush();
+    for (auto &algorithm : algorithmsToTest) {
+        for (auto &testType: testTypes) {
+            auto maxValues = (testType == TestsGenerator::TestType::RANDOM_VALUES) ?
+                             vector<int>{1000, 1000000, 1000000000} : vector<int>{1000000};
+            for (auto maxValue : maxValues) {
+                for (auto size : sizesToTest) {
+                    vector<int> values = TestsGenerator::generateTest(testType, size, maxValue);
+                    double time = testAlgorithmOnInputAndGetRunTime(*algorithm, values);
+                    cout << TestsGenerator::enumToString(testType) << " - "
+                         << fixed << setprecision(3) << typeid(*algorithm).name()
+                         << " algorithm (maxValue=" << maxValue << ", size=" << size << ") - " << time << "s\n";
+                }
+                cout << "---\n";
+            }
+            cout << "\n--------\n\n";
         }
     }
-}
 
-void SortingAlgorithmsTester::testAlgorithmsOnAscendingValues() {
-    testAlgorithmOnAscendingValues(
-            BubbleSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnAscendingValues(
-            CountingSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnAscendingValues(
-            MergeSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnAscendingValues(
-            QuickSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnAscendingValues(
-            RadixSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnAscendingValues(
-        const SortingAlgorithm &algorithm, const vector<int> &sizes
-) {
-    for (auto size : sizes) {
-        vector<int> values = TestsGenerator::generateAscendingValues(size);
-        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-        cout << "Ascending values - " << fixed << setprecision(3) << typeid(algorithm).name()
-             << " algorithm (size=" << size << ") - " << time << "s\n";
-        cout.flush();
+    for (auto &algorithm : algorithmsToTest) {
+        delete algorithm;
     }
 }
-
-void SortingAlgorithmsTester::testAlgorithmsOnDescendingValues() {
-    testAlgorithmOnDescendingValues(
-            BubbleSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnDescendingValues(
-            CountingSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnDescendingValues(
-            MergeSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnDescendingValues(
-            QuickSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnDescendingValues(
-            RadixSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnDescendingValues(
-        const SortingAlgorithm &algorithm, const vector<int> &sizes
-) {
-    for (auto size : sizes) {
-        vector<int> values = TestsGenerator::generateDescendingValues(size);
-        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-        cout << "Descending values - " << fixed << setprecision(3) << typeid(algorithm).name()
-             << " algorithm (size=" << size << ") - " << time << "s\n";
-        cout.flush();
-    }
-}
-
-void SortingAlgorithmsTester::testAlgorithmsOnIdenticalValues() {
-    testAlgorithmOnIdenticalValues(
-            BubbleSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnIdenticalValues(
-            CountingSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnIdenticalValues(
-            MergeSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnIdenticalValues(
-            QuickSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnIdenticalValues(
-            RadixSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnIdenticalValues(
-        const SortingAlgorithm &algorithm, const vector<int> &sizes
-) {
-    for (auto size : sizes) {
-        vector<int> values = TestsGenerator::generateIdenticalValues(size);
-        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-        cout << "Identical values - " << fixed << setprecision(3) << typeid(algorithm).name()
-             << " algorithm (size=" << size << ") - " << time << "s\n";
-        cout.flush();
-    }
-}
-
-void SortingAlgorithmsTester::testAlgorithmsOnAscendingSawValues() {
-    testAlgorithmOnAscendingSawValues(
-            BubbleSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnAscendingSawValues(
-            CountingSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnAscendingSawValues(
-            MergeSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnAscendingSawValues(
-            QuickSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnAscendingSawValues(
-            RadixSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnAscendingSawValues(
-        const SortingAlgorithm &algorithm, const vector<int> &sizes
-) {
-    for (auto size : sizes) {
-        vector<int> values = TestsGenerator::generateAscendingSawValues(size);
-        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-        cout << "Ascending saw values - " << fixed << setprecision(3) << typeid(algorithm).name()
-             << " algorithm (size=" << size << ") - " << time << "s\n";
-        cout.flush();
-    }
-}
-
-void SortingAlgorithmsTester::testAlgorithmsOnDescendingSawValues() {
-    testAlgorithmOnDescendingSawValues(
-            BubbleSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
-    );
-    testAlgorithmOnDescendingSawValues(
-            CountingSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnDescendingSawValues(
-            MergeSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
-    testAlgorithmOnDescendingSawValues(
-            QuickSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-    testAlgorithmOnDescendingSawValues(
-            RadixSort(),
-            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
-    );
-}
-
-void SortingAlgorithmsTester::testAlgorithmOnDescendingSawValues(
-        const SortingAlgorithm &algorithm, const vector<int> &sizes
-) {
-    for (auto size : sizes) {
-        vector<int> values = TestsGenerator::generateDescendingSawValues(size);
-        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
-        cout << "Descending saw values - " << fixed << setprecision(3) << typeid(algorithm).name()
-             << " algorithm (size=" << size << ") - " << time << "s\n";
-        cout.flush();
-    }
-}
-
 
 double SortingAlgorithmsTester::testAlgorithmOnInputAndGetRunTime(
         const SortingAlgorithm &algorithm, const vector<int> &values
