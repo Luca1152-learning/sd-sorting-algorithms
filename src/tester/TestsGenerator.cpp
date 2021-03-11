@@ -31,3 +31,11 @@ vector<int> TestsGenerator::generateDescendingValues(int size) {
     }
     return values;
 }
+
+vector<int> TestsGenerator::generateIdenticalValues(int size, int value) {
+    vector<int> values(size);
+    for (int i = 0; i < size; i++) {
+        values[i] = value;
+    }
+    return values;
+}

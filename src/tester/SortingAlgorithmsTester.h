@@ -11,20 +11,29 @@ public:
     static void testSortingAlgorithms();
 
 private:
+    // Random values
     static void testAlgorithmsOnRandomValues();
 
     static void testAlgorithmOnRandomValues(
             const SortingAlgorithm &algorithm, const vector<int> &maxValues, const vector<int> &sizes
     );
 
+    // Ascending values
     static void testAlgorithmsOnAscendingValues();
 
     static void testAlgorithmOnAscendingValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
 
+    // Descending values
     static void testAlgorithmsOnDescendingValues();
 
     static void testAlgorithmOnDescendingValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
 
+    // Identical values
+    static void testAlgorithmsOnIdenticalValues();
+
+    static void testAlgorithmOnIdenticalValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
+
+    // Tester's logic
     static double testAlgorithmOnInputAndGetRunTime(const SortingAlgorithm &algorithm, const vector<int> &values);
 
     static double sortAndGetAlgorithmRunTime(const SortingAlgorithm &algorithm, vector<int> &values);

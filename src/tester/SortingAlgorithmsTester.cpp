@@ -17,6 +17,7 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
     testAlgorithmsOnRandomValues();
     testAlgorithmsOnAscendingValues();
     testAlgorithmsOnDescendingValues();
+    testAlgorithmsOnIdenticalValues();
 }
 
 void SortingAlgorithmsTester::testAlgorithmsOnRandomValues() {
@@ -124,6 +125,40 @@ void SortingAlgorithmsTester::testAlgorithmOnDescendingValues(
         cout.flush();
     }
 }
+
+void SortingAlgorithmsTester::testAlgorithmsOnIdenticalValues() {
+    testAlgorithmOnIdenticalValues(
+            BubbleSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
+    );
+    testAlgorithmOnIdenticalValues(
+            CountingSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnIdenticalValues(
+            MergeSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnIdenticalValues(
+            QuickSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+    testAlgorithmOnIdenticalValues(
+            RadixSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+}
+
+void SortingAlgorithmsTester::testAlgorithmOnIdenticalValues(
+        const SortingAlgorithm &algorithm, const vector<int> &sizes
+) {
+    for (auto size : sizes) {
+        vector<int> values = TestsGenerator::generateIdenticalValues(size);
+        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
+        cout << "Identical values - " << fixed << setprecision(3) << typeid(algorithm).name()
+             << " algorithm (size=" << size << ") - " << time << "s\n";
+        cout.flush();
+    }
+}
+
 
 double SortingAlgorithmsTester::testAlgorithmOnInputAndGetRunTime(
         const SortingAlgorithm &algorithm, const vector<int> &values

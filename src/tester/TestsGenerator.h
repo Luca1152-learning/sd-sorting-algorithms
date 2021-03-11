@@ -13,6 +13,8 @@ public:
     static vector<int> generateAscendingValues(int size);
 
     static vector<int> generateDescendingValues(int size);
+
+    static vector<int> generateIdenticalValues(int size, int value = 1000000);
 };
 
 
