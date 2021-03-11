@@ -1,13 +1,15 @@
-#include <iostream>
-#include "MergeSort.h"
+#include
+<iostream>
+#include
+"MergeSort.h"
 
 void MergeSort::sort(vector<int> &v) const {
-    mergeSort(v, 0, int(v.size() - 1));
+mergeSort(v, 0, int(v.size()) - 1);
 }
 
 void MergeSort::mergeSort(vector<int> &values, int left, int right) {
-    if (left >= right) {
-        return;
+if (left >= right) {
+return;
     }
 
     int mid = (left + right) / 2;

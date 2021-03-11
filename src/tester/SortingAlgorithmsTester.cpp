@@ -6,6 +6,7 @@
 #include "TestsGenerator.h"
 #include "../algorithms/CountingSort.h"
 #include "../algorithms/MergeSort.h"
+#include "../algorithms/QuickSort.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -25,6 +26,11 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
             MergeSort(),
             {1000, 1000000, 1000000000},
             {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnRandomValues(
+            QuickSort(),
+            {1000, 1000000, 1000000000},
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
 }
 
 void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
@@ -86,7 +92,7 @@ unordered_map<int, int> SortingAlgorithmsTester::getAppearancesCountMap(const ve
         if (map.count(value) == 0) {
             map.insert({value, 1});
         } else {
-            map[value] += 1;
+            map[value]++;
         }
     }
     return map;
