@@ -1,9 +1,10 @@
 #include <iostream>
 #include <map>
-#include <unordered_map>
 #include <string>
+#include <iomanip>
 #include "SortingAlgorithmsTester.h"
 #include "TestsGenerator.h"
+#include "../algorithms/CountingSort.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -15,6 +16,10 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
             BubbleSort(),
             {1000, 1000000, 1000000000}, {1000, 5000, 10000, 50000, 100000, 200000, 300000}
     );
+    testAlgorithmOnRandomValues(
+            CountingSort(),
+            {1000, 1000000, 1000000000},
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
 }
 
 void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
@@ -26,8 +31,8 @@ void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
             vector<int> values = TestsGenerator::generateRandomValues(size, maxValue, 0);
             double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
 
-            cout << typeid(algorithm).name() << " algorithm - random values (size=" << size
-                 << ", maxValue=" << maxValue << "): " << time << "s\n";
+            cout << fixed << setprecision(3) << typeid(algorithm).name()
+                 << " algorithm - random values (size=" << size << ", maxValue=" << maxValue << "): " << time << "s\n";
             cout.flush();
         }
     }

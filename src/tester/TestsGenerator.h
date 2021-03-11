@@ -8,7 +8,7 @@ using namespace std;
 
 class TestsGenerator {
 public:
-    static vector<int> generateRandomValues(int size, int maxAbsValue, int seed);
+    static vector<int> generateRandomValues(int size, int maxValue, int seed);
 };
 
 

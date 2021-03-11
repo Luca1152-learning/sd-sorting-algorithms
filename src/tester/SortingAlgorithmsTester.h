@@ -4,6 +4,7 @@
 
 #include "../algorithms/SortingAlgorithm.h"
 #include "../algorithms/BubbleSort.h"
+#include <unordered_map>
 
 class SortingAlgorithmsTester {
 public:
