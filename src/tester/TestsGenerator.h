@@ -15,6 +15,10 @@ public:
     static vector<int> generateDescendingValues(int size);
 
     static vector<int> generateIdenticalValues(int size, int value = 1000000);
+
+    static vector<int> generateAscendingSawValues(int size, int maxValue = 1000000);
+
+    static vector<int> generateDescendingSawValues(int size, int maxValue = 1000000);
 };
 
 

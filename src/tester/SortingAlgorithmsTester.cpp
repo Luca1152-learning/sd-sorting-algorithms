@@ -18,6 +18,8 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
     testAlgorithmsOnAscendingValues();
     testAlgorithmsOnDescendingValues();
     testAlgorithmsOnIdenticalValues();
+    testAlgorithmsOnAscendingSawValues();
+    testAlgorithmsOnDescendingSawValues();
 }
 
 void SortingAlgorithmsTester::testAlgorithmsOnRandomValues() {
@@ -154,6 +156,72 @@ void SortingAlgorithmsTester::testAlgorithmOnIdenticalValues(
         vector<int> values = TestsGenerator::generateIdenticalValues(size);
         double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
         cout << "Identical values - " << fixed << setprecision(3) << typeid(algorithm).name()
+             << " algorithm (size=" << size << ") - " << time << "s\n";
+        cout.flush();
+    }
+}
+
+void SortingAlgorithmsTester::testAlgorithmsOnAscendingSawValues() {
+    testAlgorithmOnAscendingSawValues(
+            BubbleSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
+    );
+    testAlgorithmOnAscendingSawValues(
+            CountingSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnAscendingSawValues(
+            MergeSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnAscendingSawValues(
+            QuickSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+    testAlgorithmOnAscendingSawValues(
+            RadixSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+}
+
+void SortingAlgorithmsTester::testAlgorithmOnAscendingSawValues(
+        const SortingAlgorithm &algorithm, const vector<int> &sizes
+) {
+    for (auto size : sizes) {
+        vector<int> values = TestsGenerator::generateAscendingSawValues(size);
+        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
+        cout << "Ascending saw values - " << fixed << setprecision(3) << typeid(algorithm).name()
+             << " algorithm (size=" << size << ") - " << time << "s\n";
+        cout.flush();
+    }
+}
+
+void SortingAlgorithmsTester::testAlgorithmsOnDescendingSawValues() {
+    testAlgorithmOnDescendingSawValues(
+            BubbleSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000}
+    );
+    testAlgorithmOnDescendingSawValues(
+            CountingSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnDescendingSawValues(
+            MergeSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnDescendingSawValues(
+            QuickSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+    testAlgorithmOnDescendingSawValues(
+            RadixSort(),
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000}
+    );
+}
+
+void SortingAlgorithmsTester::testAlgorithmOnDescendingSawValues(
+        const SortingAlgorithm &algorithm, const vector<int> &sizes
+) {
+    for (auto size : sizes) {
+        vector<int> values = TestsGenerator::generateDescendingSawValues(size);
+        double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
+        cout << "Descending saw values - " << fixed << setprecision(3) << typeid(algorithm).name()
              << " algorithm (size=" << size << ") - " << time << "s\n";
         cout.flush();
     }

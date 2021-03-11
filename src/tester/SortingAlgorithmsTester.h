@@ -33,6 +33,16 @@ private:
 
     static void testAlgorithmOnIdenticalValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
 
+    // Ascending saw values
+    static void testAlgorithmsOnAscendingSawValues();
+
+    static void testAlgorithmOnAscendingSawValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
+
+    // Descending saw values
+    static void testAlgorithmsOnDescendingSawValues();
+
+    static void testAlgorithmOnDescendingSawValues(const SortingAlgorithm &algorithm, const vector<int> &sizes);
+
     // Tester's logic
     static double testAlgorithmOnInputAndGetRunTime(const SortingAlgorithm &algorithm, const vector<int> &values);
 
