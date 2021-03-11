@@ -5,6 +5,7 @@
 #include "SortingAlgorithmsTester.h"
 #include "TestsGenerator.h"
 #include "../algorithms/CountingSort.h"
+#include "../algorithms/MergeSort.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -20,6 +21,10 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
             CountingSort(),
             {1000, 1000000, 1000000000},
             {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
+    testAlgorithmOnRandomValues(
+            MergeSort(),
+            {1000, 1000000, 1000000000},
+            {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000});
 }
 
 void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
@@ -32,7 +37,7 @@ void SortingAlgorithmsTester::testAlgorithmOnRandomValues(
             double time = testAlgorithmOnInputAndGetRunTime(algorithm, values);
 
             cout << fixed << setprecision(3) << typeid(algorithm).name()
-                 << " algorithm - random values (size=" << size << ", maxValue=" << maxValue << "): " << time << "s\n";
+                 << " algorithm - random values (maxValue=" << maxValue << ", size=" << size << "): " << time << "s\n";
             cout.flush();
         }
     }
