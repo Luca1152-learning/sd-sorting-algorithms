@@ -15,14 +15,14 @@ void QuickSort::quickSort(vector<int> &values, int left, int right) {
     }
     int partitionMid = partition(values, left, right);
     quickSort(values, left, partitionMid - 1);
-    quickSort(values, partitionMid, right);
+    quickSort(values, partitionMid + 1, right);
 }
 
 int QuickSort::partition(vector<int> &values, int left, int right) {
     swap(values[rand() % (right - left + 1) + left], values[right]);
-    int i = left - 1;
+    int pivot = values[right], i = left - 1;
     for (int j = left; j < right; j++) {
-        if (values[j] <= values[right]) {
+        if (values[j] < pivot) {
             i++;
             swap(values[i], values[j]);
         }
