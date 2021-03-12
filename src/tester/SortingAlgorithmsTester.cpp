@@ -8,6 +8,7 @@
 #include "../algorithms/MergeSort.h"
 #include "../algorithms/QuickSort.h"
 #include "../algorithms/RadixSort.h"
+#include "../algorithms/CppSort.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -15,10 +16,12 @@ using namespace std::string_literals;
 
 void SortingAlgorithmsTester::testSortingAlgorithms() {
     vector<SortingAlgorithm *> algorithmsToTest = {
-            new CountingSort(), new MergeSort(), new QuickSort(), new RadixSort(), new BubbleSort()
+            new CppSort()
     };
     vector<TestsGenerator::TestType> testTypes = {
-            TestsGenerator::TestType::RANDOM_VALUES
+            TestsGenerator::TestType::RANDOM_VALUES, TestsGenerator::TestType::ASCENDING_VALUES,
+            TestsGenerator::TestType::DESCENDING_VALUES, TestsGenerator::TestType::IDENTICAL_VALUES,
+            TestsGenerator::TestType::ASCENDING_SAW_VALUES, TestsGenerator::TestType::DESCENDING_SAW_VALUES
     };
     vector<int> sizesToTest = {1000, 5000, 10000, 50000, 100000, 200000, 300000, 500000, 1000000};
 
@@ -34,9 +37,9 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
                          << fixed << setprecision(3) << typeid(*algorithm).name()
                          << " algorithm (maxValue=" << maxValue << ", size=" << size << ") - " << time << "s\n";
                 }
-                cout << "---\n";
+                cout << "\n";
             }
-            cout << "\n--------\n\n";
+            cout << "\n\n";
         }
     }
 
@@ -61,7 +64,7 @@ double SortingAlgorithmsTester::testAlgorithmOnInputAndGetRunTime(
 double SortingAlgorithmsTester::sortAndGetAlgorithmRunTime(const SortingAlgorithm &algorithm, vector<int> &values) {
     auto start = high_resolution_clock::now();
     algorithm.sort(values);
-    return (float) duration_cast<nanoseconds>(high_resolution_clock::now() - start).count() / 1e9;
+    return (double) duration_cast<nanoseconds>(high_resolution_clock::now() - start).count() / 1e9;
 }
 
 bool SortingAlgorithmsTester::vectorsHaveSameValues(const vector<int> &valuesA, const vector<int> &valuesB) {
