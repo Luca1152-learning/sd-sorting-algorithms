@@ -16,7 +16,7 @@ using namespace std::string_literals;
 
 void SortingAlgorithmsTester::testSortingAlgorithms() {
     vector<SortingAlgorithm *> algorithmsToTest = {
-            new CppSort()
+            new CppSort(), new QuickSort(), new MergeSort(), new RadixSort(), new CountingSort(), new BubbleSort()
     };
     vector<TestsGenerator::TestType> testTypes = {
             TestsGenerator::TestType::RANDOM_VALUES, TestsGenerator::TestType::ASCENDING_VALUES,
@@ -31,11 +31,23 @@ void SortingAlgorithmsTester::testSortingAlgorithms() {
                              vector<int>{1000, 1000000, 1000000000} : vector<int>{1000000};
             for (auto maxValue : maxValues) {
                 for (auto size : sizesToTest) {
-                    vector<int> values = TestsGenerator::generateTest(testType, size, maxValue);
-                    double time = testAlgorithmOnInputAndGetRunTime(*algorithm, values);
+                    // Test each algorithm (except Bubble Sort) repeatedly
+                    int testsCount = (algorithm != algorithmsToTest.back()) ? 10 : 1;
+
+                    vector<double> times(testsCount);
+                    for (int testNumber = 0; testNumber < testsCount; testNumber++) {
+                        vector<int> values = TestsGenerator::generateTest(testType, size, maxValue);
+                        times[testNumber] = testAlgorithmOnInputAndGetRunTime(*algorithm, values);
+                    }
+
+                    double avgTime = accumulate(times.begin(), times.end(), 0.0) / times.size();
                     cout << TestsGenerator::enumToString(testType) << " - "
                          << fixed << setprecision(3) << typeid(*algorithm).name()
-                         << " algorithm (maxValue=" << maxValue << ", size=" << size << ") - " << time << "s\n";
+                         << " algorithm (maxValue=" << maxValue << ", size=" << size << ") - " << avgTime << "s";
+                    if (testsCount != 1) {
+                        cout << " avg. (" << testsCount << " tests)";
+                    }
+                    cout << "\n";
                 }
                 cout << "\n";
             }
