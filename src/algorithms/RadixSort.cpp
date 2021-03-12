@@ -1,8 +1,12 @@
 #include "RadixSort.h"
 
 void RadixSort::sort(vector<int> &values) const {
-    for (int bitIndex = 0; bitIndex < sizeof(values[0]) * 8; bitIndex++) {
+    int msbIndex = sizeof(values[0]) * 8 - 1;
+    for (int bitIndex = 0; bitIndex <= msbIndex; bitIndex++) {
         bucketSort(values, bitIndex);
+    }
+    if (getBitAtIndex(values.back(), msbIndex) == 1) {
+        throw logic_error("Vectors with negative values aren't supported by RadixSort.");
     }
 }
 
